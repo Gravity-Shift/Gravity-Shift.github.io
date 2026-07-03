@@ -224,7 +224,7 @@
         </div>
     </footer>
 
-    <script>
+<script>
         const toggleBtn = document.getElementById('themeToggle');
         const logoLeft = document.getElementById('logoLeft');
         const logoRight = document.getElementById('logoRight');
@@ -239,22 +239,34 @@
             right: "https://i.postimg.cc/wB8K6VT2/Shift-dark.png"
         };
 
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            toggleBtn.textContent = 'Light Mode';
+            if(logoLeft) logoLeft.src = darkLogos.left;
+            if(logoRight) logoRight.src = darkLogos.right;
+        } else {
+            if(logoLeft) logoLeft.src = lightLogos.left;
+            if(logoRight) logoRight.src = lightLogos.right;
+        }
+
         toggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             
             if (currentTheme === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
                 toggleBtn.textContent = 'Dark Mode';
-                logoLeft.src = lightLogos.left;
-                logoRight.src = lightLogos.right;
+                localStorage.setItem('theme', 'light');
+                if(logoLeft) logoLeft.src = lightLogos.left;
+                if(logoRight) logoRight.src = lightLogos.right;
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 toggleBtn.textContent = 'Light Mode';
-                logoLeft.src = darkLogos.left;
-                logoRight.src = darkLogos.right;
+                localStorage.setItem('theme', 'dark');
+                if(logoLeft) logoLeft.src = darkLogos.left;
+                if(logoRight) logoRight.src = darkLogos.right;
             }
         });
     </script>
-
 </body>
 </html>
