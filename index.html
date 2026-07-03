@@ -183,6 +183,27 @@
         .social-links a:hover {
             opacity: 0.7;
         }
+
+        .band-photos-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px; 
+            width: 100%;
+        }
+
+        .band-big-photo {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+            object-fit: cover;
+        }
+
+        [data-theme="dark"] .band-big-photo {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -215,6 +236,11 @@
         </p>
     </div>
 
+    <div class="band-photos-container">
+        <img src="https://i.postimg.cc/W388QZnM/Gravity-Shift1-(1).jpg" alt="Gravity Shift 1" class="band-big-photo">
+        <img src="https://i.postimg.cc/KzffdTNK/Gravity-Shift2.jpg" alt="Gravity Shift 2" class="band-big-photo">
+    </div>
+    
     <footer>
         <div class="footer-text">Follow us!</div>
         <div class="social-links">
