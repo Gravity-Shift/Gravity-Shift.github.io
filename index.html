@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Band Site</title>
+    <title>Gravity Shift (Homepage)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -12,12 +12,45 @@
             padding: 0;
             box-sizing: border-box;
         }
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --desc-color: #333333;
+            --toggle-bg: #000000;
+            --toggle-text: #ffffff;
+        }
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --desc-color: #a0aec0;
+            --toggle-bg: #ffffff;
+            --toggle-text: #000000;
+        }
         body {
             font-family: 'Arial Black', Gadget, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
             padding-bottom: 60px; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background-color: var(--toggle-bg);
+            color: var(--toggle-text);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .intro-container {
@@ -26,7 +59,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #ffffff;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s;
         }
 
         .logo-half {
@@ -76,7 +110,8 @@
             font-family: Arial, sans-serif;
             font-size: 1.2rem;
             line-height: 1.8;
-            color: #333333;
+            color: var(--desc-color);
+            transition: color 0.3s;
         }
 
         footer {
@@ -114,9 +149,11 @@
 </head>
 <body>
 
+    <button class="theme-toggle-btn" id="themeToggle">Dark Mode</button>
+
     <div class="intro-container">
-        <img src="https://i.postimg.cc/gJC0VRY2/Gravity.png" alt="Logo Left" class="logo-half left-half">
-        <img src="https://i.postimg.cc/XqKn9zH1/Shift.png" alt="Logo Right" class="logo-half right-half">
+        <img id="logoLeft" src="https://i.postimg.cc/gJC0VRY2/Gravity.png" alt="Logo Left" class="logo-half left-half">
+        <img id="logoRight" src="https://i.postimg.cc/XqKn9zH1/Shift.png" alt="Logo Right" class="logo-half right-half">
     </div>
 
     <div class="description-section">
@@ -127,7 +164,7 @@
     </div>
 
     <footer>
-        <div class="footer-text">follow us!</div>
+        <div class="footer-text">Follow us!</div>
         <div class="social-links">
             <a href="https://www.instagram.com/gravity.shift.band/" target="_blank" aria-label="Instagram">
                 <i class="fa-brands fa-instagram"></i>
@@ -137,6 +174,38 @@
             </a>
         </div>
     </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('themeToggle');
+        const logoLeft = document.getElementById('logoLeft');
+        const logoRight = document.getElementById('logoRight');
+
+        const lightLogos = {
+            left: "https://i.postimg.cc/gJC0VRY2/Gravity.png",
+            right: "https://i.postimg.cc/XqKn9zH1/Shift.png"
+        };
+
+        const darkLogos = {
+            left: "https://i.postimg.cc/NFvpWJst/Gravity-darkmode.png",
+            right: "https://i.postimg.cc/Bn7NqQSd/Shift-darkmode.png"
+        };
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                toggleBtn.textContent = 'Dark Mode';
+                logoLeft.src = lightLogos.left;
+                logoRight.src = lightLogos.right;
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                toggleBtn.textContent = 'Light Mode';
+                logoLeft.src = darkLogos.left;
+                logoRight.src = darkLogos.right;
+            }
+        });
+    </script>
 
 </body>
 </html>
