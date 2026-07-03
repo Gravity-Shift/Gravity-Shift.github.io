@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravity Shift (Homepage)</title>
+    <title>Our Band Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -29,7 +31,7 @@
 
         .logo-half {
             position: absolute;
-            height: 300px;
+            height: 300px; 
             width: auto;
             animation-duration: 1.5s;
             animation-fill-mode: forwards;
@@ -74,7 +76,7 @@
             font-family: Arial, sans-serif;
             font-size: 1.2rem;
             line-height: 1.8;
-            color: #ccc;
+            color: #333333;
         }
 
         footer {
@@ -82,7 +84,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #000;
+            background-color: #000000;
             border-top: 1px solid #222;
             padding: 15px 30px;
             display: flex;
@@ -92,20 +94,21 @@
         }
 
         .footer-text {
+            color: #ffffff;
             font-size: 1rem;
             letter-spacing: 1px;
         }
 
         .social-links a {
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
-            margin-left: 15px;
-            font-size: 1.2rem;
-            transition: color 0.3s;
+            margin-left: 20px;
+            font-size: 1.5rem;
+            transition: opacity 0.3s;
         }
 
         .social-links a:hover {
-            color: #00ff66; 
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -119,15 +122,19 @@
     <div class="description-section">
         <h2>About The Band</h2>
         <p>
-            Hey there, if you wanna find my sunken treasure chest you'll have to try harder than that!
+            Hey there, if you wanna find my sunken treasure chest you'll have to try harder than that
         </p>
     </div>
 
     <footer>
-        <div class="footer-text">Follow us!</div>
+        <div class="footer-text">follow us!</div>
         <div class="social-links">
-            <a href="https://www.instagram.com/gravity.shift.band/" target="_blank">Instagram</a>
-            <a href="https://www.facebook.com/p/Gravity-Shift-Rock-Band-61572665002330/" target="_blank">Facebook</a>
+            <a href="https://www.instagram.com/gravity.shift.band/" target="_blank" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/p/Gravity-Shift-Rock-Band-61572665002330/" target="_blank" aria-label="Facebook">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
         </div>
     </footer>
 
