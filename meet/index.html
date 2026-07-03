@@ -117,14 +117,23 @@
     </footer>
     <script>
         const toggleBtn = document.getElementById('themeToggle');
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            toggleBtn.textContent = 'Light Mode';
+        }
+
         toggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             if (currentTheme === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
                 toggleBtn.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 toggleBtn.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark'); 
             }
         });
     </script>
