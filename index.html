@@ -85,11 +85,11 @@
         }
 
         @keyframes slideInLeft {
-            to { left: 50%; transform: translateX(-100%); }
+            to { left: calc(50% + 10px); transform: translateX(-100%); }
         }
 
         @keyframes slideInRight {
-            to { right: 50%; transform: translateX(100%); }
+            to { right: calc(50% - 10px); transform: translateX(100%); }
         }
 
         .description-section {
