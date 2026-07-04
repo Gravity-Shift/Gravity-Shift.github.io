@@ -65,6 +65,46 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s, color 0.3s;
         }
 
+        .intro-container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s;
+            overflow: hidden;
+        }
+
+        .logo-half {
+            position: absolute;
+            height: 500px; 
+            width: auto;
+            animation-duration: 1.5s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+        }
+
+        .left-half {
+            left: 0;
+            transform: translateX(-100%);
+            animation-name: slideInLeft;
+        }
+
+        .right-half {
+            right: 0;
+            transform: translateX(100%);
+            animation-name: slideInRight;
+        }
+
+        @keyframes slideInLeft {
+            to { left: calc(50% + 10px); transform: translateX(-100%); }
+        }
+
+        @keyframes slideInRight {
+            to { right: calc(50% - 10px); transform: translateX(100%); }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding-top: 160px;
@@ -97,28 +137,27 @@
                 align-items: center;
                 gap: 20px;
                 height: auto;
-                min-height: 100vh;
+                min-height: 80vh;
                 padding: 40px 0;
-                box-sizing: border-box;
             }
             .logo-half {
                 position: relative !important;
                 height: auto !important;
-                width: 80% !important;
-                max-width: 400px;
+                width: 85% !important;
+                max-width: 320px;
                 left: auto !important;
                 right: auto !important;
-                margin: 0 auto;
+                margin: 0 auto !important;
             }
             .left-half {
-                transform: translateY(-50px);
+                transform: translateY(-60px);
                 animation-name: slideInTopMobile;
             }
             .right-half {
-                transform: translateY(50px);
+                transform: translateY(60px);
                 animation-name: slideInBottomMobile;
-            }
         }
+    }
 
         @keyframes slideInTopMobile {
             to { transform: translateY(0); }
@@ -126,84 +165,6 @@
 
         @keyframes slideInBottomMobile {
             to { transform: translateY(0); }
-        }
-
-        .intro-container {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg-color);
-            transition: background-color 0.3s;
-        }
-
-        .logo-half {
-            position: absolute;
-            height: 500px; 
-            width: auto;
-            animation-duration: 1.5s;
-            animation-fill-mode: forwards;
-            animation-timing-function: ease-out;
-        }
-
-        .left-half {
-            left: 0;
-            transform: translateX(-100%);
-            animation-name: slideInLeft;
-        }
-
-        .right-half {
-            right: 0;
-            transform: translateX(100%);
-            animation-name: slideInRight;
-        }
-
-        @keyframes slideInLeft {
-            to { left: calc(50% + 10px); transform: translateX(-100%); }
-        }
-
-        @keyframes slideInRight {
-            to { right: calc(50% - 10px); transform: translateX(100%); }
-        }
-
-        .intro-container {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg-color);
-            transition: background-color 0.3s;
-        }
-
-        .logo-half {
-            position: absolute;
-            height: 500px; 
-            width: auto;
-            animation-duration: 1.5s;
-            animation-fill-mode: forwards;
-            animation-timing-function: ease-out;
-        }
-
-        .left-half {
-            left: 0;
-            transform: translateX(-100%);
-            animation-name: slideInLeft;
-        }
-
-        .right-half {
-            right: 0;
-            transform: translateX(100%);
-            animation-name: slideInRight;
-        }
-
-        @keyframes slideInLeft {
-            to { left: calc(50% + 10px); transform: translateX(-100%); }
-        }
-
-        @keyframes slideInRight {
-            to { right: calc(50% - 10px); transform: translateX(100%); }
         }
         .description-section {
             padding: 100px 20px 120px 20px;
