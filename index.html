@@ -135,7 +135,7 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                gap: 5px;
+                gap: 0px; 
                 height: auto;
                 min-height: 80vh;
                 padding: 40px 0;
@@ -150,14 +150,15 @@
                 margin: 0 auto !important;
             }
             .left-half {
-                transform: translateY(-60px);
+                transform: translateY(-20px);
                 animation-name: slideInTopMobile;
             }
             .right-half {
-                transform: translateY(60px);
+                margin-top: -15px !important; 
+                transform: translateY(20px);
                 animation-name: slideInBottomMobile;
+            }
         }
-    }
 
         @keyframes slideInTopMobile {
             to { transform: translateY(0); }
