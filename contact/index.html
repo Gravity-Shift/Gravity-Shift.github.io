@@ -41,18 +41,51 @@
             background-color: var(--nav-bg); backdrop-filter: blur(5px);
             transition: background-color 0.3s;
         }
-        .nav-links { display: flex; gap: 20px; align-items: center; margin-right: 140px; }
+        .nav-links { 
+            display: flex; 
+            gap: 20px; 
+            align-items: center; 
+            margin-right: 140px;
+            flex-wrap: nowrap;
+        }
         .nav-links a {
             color: var(--text-color); text-decoration: none; font-size: 0.9rem;
             text-transform: uppercase; letter-spacing: 1px; font-weight: bold; transition: opacity 0.3s;
+            white-space: nowrap; 
         }
-        .nav-links a:hover { opacity: 0.6; }
         .theme-toggle-btn {
             position: fixed; top: 15px; right: 20px; z-index: 100;
             background-color: var(--toggle-bg); color: var(--toggle-text);
             border: none; padding: 10px 15px; border-radius: 20px; cursor: pointer;
             font-family: Arial, sans-serif; font-weight: bold; font-size: 0.9rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s, color 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 160px;
+            }
+            nav {
+                flex-direction: column; 
+                align-items: center;
+                padding: 15px 10px;
+                gap: 15px;
+            }
+             .nav-links {
+                margin-right: 0;
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 5px 2px;
+            }
+            .theme-toggle-btn {
+                position: static; 
+                margin-top: 5px;
+            }
         }
         section { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
         h2 { font-size: 2.5rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
