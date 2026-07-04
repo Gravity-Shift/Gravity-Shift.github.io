@@ -65,7 +65,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.3s, color 0.3s;
         }
 
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
             body {
                 padding-top: 160px;
             }
@@ -93,21 +93,78 @@
 
             .intro-container {
                 flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 gap: 20px;
                 height: auto;
+                min-height: 100vh;
                 padding: 40px 0;
+                box-sizing: border-box;
             }
             .logo-half {
-                position: relative;
-                height: auto;
-                max-width: 80%;
+                position: relative !important;
+                height: auto !important;
+                width: 80% !important;
+                max-width: 400px;
+                left: auto !important;
+                right: auto !important;
+                margin: 0 auto;
             }
-            @keyframes slideInLeft {
-                to { left: auto; transform: translateX(0); }
+            .left-half {
+                transform: translateY(-50px);
+                animation-name: slideInTopMobile;
             }
-            @keyframes slideInRight {
-                to { right: auto; transform: translateX(0); }
+            .right-half {
+                transform: translateY(50px);
+                animation-name: slideInBottomMobile;
             }
+        }
+
+        @keyframes slideInTopMobile {
+            to { transform: translateY(0); }
+        }
+
+        @keyframes slideInBottomMobile {
+            to { transform: translateY(0); }
+        }
+
+        .intro-container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s;
+        }
+
+        .logo-half {
+            position: absolute;
+            height: 500px; 
+            width: auto;
+            animation-duration: 1.5s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+        }
+
+        .left-half {
+            left: 0;
+            transform: translateX(-100%);
+            animation-name: slideInLeft;
+        }
+
+        .right-half {
+            right: 0;
+            transform: translateX(100%);
+            animation-name: slideInRight;
+        }
+
+        @keyframes slideInLeft {
+            to { left: calc(50% + 10px); transform: translateX(-100%); }
+        }
+
+        @keyframes slideInRight {
+            to { right: calc(50% - 10px); transform: translateX(100%); }
         }
 
         .intro-container {
