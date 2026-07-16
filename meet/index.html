@@ -86,6 +86,23 @@
                 position: static; 
                 margin-top: 5px;
             }
+            .video-container {
+                position: relative;
+                padding-bottom: 56.25%; 
+                height: 0;
+                overflow: hidden;
+                max-width: 100%;
+                margin-top: 15px;
+                border-radius: 8px;
+            }
+
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
         }
         section { max-width: 700px; margin: 0 auto; padding: 40px 20px; text-align: center; }
         h2 { font-size: 2.5rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
@@ -137,7 +154,10 @@
             <div class="member-block">
                 <h3>Blake Batten</h3>
                 <img src="https://i.postimg.cc/d1Fv5bWg/690634536-1280374574243772-2540754803093162591-n-(1).jpg" alt="Blake Batten" class="member-img">
-                <p>https://youtu.be/tna3B5zqHdk</p>
+                
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/tna3B5zqHdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
             </div>
             <div class="member-block">
                 <h3>Marty Schmidt</h3>
