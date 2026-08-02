@@ -30,7 +30,8 @@ jobs:
             --arg d "$DATE" \
             '{first: $f, last: $l, stars: ($s|tonumber), comment: $c, date: $d}')
 
-          jq ". | unshift($NEW_ENTRY)" reviews.json > temp.json && mv temp.json reviews.json
+          # Fixed: Puts the new entry at the very beginning of the array safely
+          jq "[ \$NEW_ENTRY ] + ." reviews.json > temp.json && mv temp.json reviews.json
 
       - name: Commit and Push to GitHub Pages
         run: |
