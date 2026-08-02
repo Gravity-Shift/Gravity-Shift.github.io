@@ -15,28 +15,32 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Process and Save Review
+        env:
+          RAW_FIRST: ${{ github.event.client_payload.first }}
+          RAW_LAST: ${{ github.event.client_payload.last }}
+          RAW_STARS: ${{ github.event.client_payload.stars }}
+          RAW_COMMENT: ${{ github.event.client_payload.comment }}
         run: |
-          FIRST_NAME='${{ github.event.client_payload.first }}'
-          LAST_NAME='${{ github.event.client_payload.last }}'
-          STARS='${{ github.event.client_payload.stars }}'
-          COMMENT='${{ github.event.client_payload.comment }}'
           DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
+          # jq reads the system environment variables directly via $ENV, bypassing shell parsing completely!
           NEW_ENTRY=$(jq -n \
-            --arg f "$FIRST_NAME" \
-            --arg l "$LAST_NAME" \
-            --arg s "$STARS" \
-            --arg c "$COMMENT" \
+            --arg f "$RAW_FIRST" \
+            --arg l "$RAW_LAST" \
+            --arg s "$RAW_STARS" \
+            --arg c "$RAW_COMMENT" \
             --arg d "$DATE" \
             '{first: $f, last: $l, stars: ($s|tonumber), comment: $c, date: $d}')
 
-          # Fixed: Puts the new entry at the very beginning of the array safely
+          # Puts the new entry at the very beginning of the array safely
           jq "[ \$NEW_ENTRY ] + ." reviews.json > temp.json && mv temp.json reviews.json
 
       - name: Commit and Push to GitHub Pages
+        env:
+          RAW_FIRST: ${{ github.event.client_payload.first }}
         run: |
           git config --global user.name "GravityShiftBot"
           git config --global user.email "bot@gravityshiftband.org"
           git add reviews.json
-          git commit -m "system: global review added by ${{ github.event.client_payload.first }}"
+          git commit -m "system: global review added by $RAW_FIRST"
           git push
