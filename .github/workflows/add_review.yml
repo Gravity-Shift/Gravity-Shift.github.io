@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Process and Save Review
+        - name: Process and Save Review
         env:
           RAW_FIRST: ${{ github.event.client_payload.first }}
           RAW_LAST: ${{ github.event.client_payload.last }}
@@ -23,7 +23,6 @@ jobs:
         run: |
           DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-          # jq reads the system environment variables directly via $ENV, bypassing shell parsing completely!
           NEW_ENTRY=$(jq -n \
             --arg f "$RAW_FIRST" \
             --arg l "$RAW_LAST" \
@@ -32,8 +31,7 @@ jobs:
             --arg d "$DATE" \
             '{first: $f, last: $l, stars: ($s|tonumber), comment: $c, date: $d}')
 
-          # Puts the new entry at the very beginning of the array safely
-          jq "[ \$NEW_ENTRY ] + ." reviews.json > temp.json && mv temp.json reviews.json
+          jq --argjson new "$NEW_ENTRY" '[ $new ] + .' reviews.json > temp.json && mv temp.json reviews.json
 
       - name: Commit and Push to GitHub Pages
         env:
