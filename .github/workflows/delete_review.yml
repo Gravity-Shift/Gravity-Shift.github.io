@@ -1,0 +1,34 @@
+name: Delete A Review
+
+on:
+  repository_dispatch:
+    types: [delete-review-event]
+
+permissions:
+  contents: write
+
+jobs:
+  remove-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Locate and Delete Review Entry
+        env:
+          TARGET_FIRST: ${{ github.event.client_payload.first }}
+          TARGET_LAST: ${{ github.event.client_payload.last }}
+          TARGET_COMMENT: ${{ github.event.client_payload.comment }}
+        run: |
+          # Filters out items matching the specified name and comment perfectly
+          jq --arg f "$TARGET_FIRST" --arg l "$TARGET_LAST" --arg c "$TARGET_COMMENT" \
+            'del(.[] | select(.first == $f and (.last == $l or ($l == "" and .last == null)) and .comment == $c))' \
+            reviews.json > temp.json && mv temp.json reviews.json
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "GravityShiftBot"
+          git config --global user.email "bot@gravityshiftband.org"
+          git add reviews.json
+          git commit -m "system: global review entry removed"
+          git push
