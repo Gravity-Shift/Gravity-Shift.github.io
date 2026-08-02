@@ -37,7 +37,7 @@
             font-family: 'Arial Black', Gadget, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            padding-top: 140px;
+            padding-top: 140px; 
             padding-bottom: 120px; 
             transition: background-color 0.3s, color 0.3s;
         }
@@ -107,7 +107,48 @@
         }
 
         section { max-width: 600px; margin: 0 auto; padding: 20px; }
-        h3 { font-size: 2rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
+
+        .action-container {
+            margin-bottom: 40px;
+        }
+        
+        .button-wrapper {
+            text-align: center;
+        }
+
+        .open-form-btn {
+            background-color: #008CFF;
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            font-family: 'Arial Black', Gadget, sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 140, 255, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .open-form-btn:hover {
+            background-color: #0074d9;
+            transform: translateY(-2px);
+        }
+
+        #form-wrapper {
+            display: none;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid var(--line-color);
+            border-radius: 8px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         #review-form {
             display: flex;
@@ -124,7 +165,6 @@
             background-color: var(--form-input-bg);
             color: var(--text-color);
             font-size: 1rem;
-            transition: border-color 0.3s, background-color 0.3s;
         }
         
         #review-form textarea { height: 120px; resize: vertical; }
@@ -139,26 +179,50 @@
             text-transform: uppercase;
             cursor: pointer;
             border-radius: 6px;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        #review-form button[type="submit"]:hover {
-            opacity: 0.9;
         }
 
-        .already-reviewed {
-            text-align: center;
+        .show-item {
+            padding: 25px 0;
+            border-top: 2px solid var(--line-color);
             font-family: Arial, sans-serif;
-            padding: 40px 20px;
         }
-        .already-reviewed p { font-size: 1.2rem; margin-bottom: 20px; }
+        .show-item:last-of-type {
+            border-bottom: 2px solid var(--line-color);
+        }
+        .show-main-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .show-date-time {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            text-transform: uppercase;
+        }
+        .show-address {
+            font-size: 1rem;
+            color: var(--desc-color);
+            letter-spacing: 0.5px;
+        }
+
         #delete-review-btn {
             background-color: #ff3b30;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
+            font-family: Arial, sans-serif;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        #delete-review-btn:hover {
+            opacity: 0.9;
         }
 
         footer {
@@ -190,10 +254,13 @@
         </div>
     </nav>
 
-    <section>
-        <div id="review-area">
+    <section class="action-container" id="interaction-zone">
+        <div class="button-wrapper">
+            <button class="open-form-btn" id="toggleFormBtn">Send a Review</button>
+        </div>
+        
+        <div id="form-wrapper">
             <form id="review-form">
-                <h3>Leave a Review</h3>
                 <input type="text" id="first-name" required placeholder="First Name">
                 <input type="text" id="last-name" placeholder="Last Name (Optional)">
                 <select id="rating-stars" required>
@@ -209,23 +276,26 @@
         </div>
     </section>
 
+    <section>
+        <h2 style="font-size: 2.5rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; text-align: center;">What Fans Are Saying</h2>
+        <div id="reviews-display-list">Loading reviews...</div>
+    </section>
+
     <footer>
         <div class="footer-text">Follow us!</div>
         <div class="social-links">
-            <a href="https://www.instagram.com/gravity.shift.band/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.facebook.com/p/Gravity-Shift-Rock-Band-61572665002330/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/gravity.shift.band/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/p/Gravity-Shift-Rock-Band-61572665002330/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
         </div>
     </footer>
 
     <script>
         const toggleBtn = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
-        
         if (savedTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
             toggleBtn.textContent = 'Light Mode';
         }
-
         toggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             if (currentTheme === 'dark') {
@@ -239,30 +309,91 @@
             }
         });
 
-        function getCookie(name) {
-            let value = "; " + document.cookie;
-            let parts = value.split("; " + name + "=");
-            if (parts.length === 2) return parts.pop().split(";").shift();
-            return null;
+        const toggleFormBtn = document.getElementById('toggleFormBtn');
+        const formWrapper = document.getElementById('form-wrapper');
+        
+        if (toggleFormBtn) {
+            toggleFormBtn.addEventListener('click', () => {
+                if (formWrapper.style.display === 'block') {
+                    formWrapper.style.display = 'none';
+                    toggleFormBtn.textContent = 'Send a Review';
+                } else {
+                    formWrapper.style.display = 'block';
+                    toggleFormBtn.textContent = 'Hide Form';
+                }
+            });
         }
 
-        function checkExistingReview() {
-            const hasReviewed = getCookie("has_submitted_review");
-            const reviewArea = document.getElementById('review-area');
+        function renderUserStatus() {
+            const savedReview = localStorage.getItem("user_submitted_review_data");
+            const interactionZone = document.getElementById('interaction-zone');
 
-            if (hasReviewed) {
-                reviewArea.innerHTML = `
-                    <div class="already-reviewed">
-                        <p>You have already submitted a global review!</p>
-                        <button id="delete-review-btn">Delete My Review & Write a New One</button>
-                    </div>
-                `;
+            if (savedReview) {
+                try {
+                    const userReview = JSON.parse(savedReview);
+                    const starString = '⭐'.repeat(parseInt(userReview.stars) || 5);
+                    const lastName = userReview.last ? ` ${userReview.last}` : '';
 
-                document.getElementById('delete-review-btn').addEventListener('click', () => {
-                    document.cookie = "has_submitted_review=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    alert("Your local session was cleared. You can now write a new review!");
-                    location.reload();
+                    interactionZone.innerHTML = `
+                        <div style="text-align: left; font-family: Arial, sans-serif; padding: 25px; border: 3px solid #008CFF; border-radius: 8px; background-color: var(--form-input-bg);">
+                            <div style="font-family: 'Arial Black', sans-serif; text-transform: uppercase; font-size: 0.8rem; color: #008CFF; letter-spacing: 1px; margin-bottom: 10px;">Your Live Review (Pending Site Update)</div>
+                            <div class="show-main-info" style="margin-bottom: 8px;">
+                                <span class="show-date-time" style="font-family: 'Arial Black', sans-serif;">${userReview.first}${lastName}</span>
+                                <span style="font-size: 1.1rem;">${starString}</span>
+                            </div>
+                            <div class="show-address" style="color: var(--text-color); font-family: Arial, sans-serif; text-transform: none; font-weight: normal;">
+                                "${userReview.comment || 'No comment left.'}"
+                            </div>
+                            <div style="text-align: right; margin-top: 15px;">
+                                <button id="delete-review-btn">Delete & Write New Review</button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('delete-review-btn').addEventListener('click', () => {
+                        localStorage.removeItem("user_submitted_review_data");
+                        alert("Session cleared. You can now write a fresh review!");
+                        location.reload();
+                    });
+                } catch (e) {
+                    console.error("Local storage processing error:", e);
+                }
+            }
+        }
+
+        async function loadLiveReviews() {
+            const displayList = document.getElementById('reviews-display-list');
+            try {
+                const response = await fetch('/reviews.json?t=' + new Date().getTime());
+                const reviews = await response.json();
+
+                if (!reviews || reviews.length === 0) {
+                    displayList.innerHTML = "<p style='text-align:center; font-family:Arial; font-weight:normal;'>No public reviews posted yet.</p>";
+                    return;
+                }
+
+                displayList.innerHTML = '';
+                reviews.forEach(review => {
+                    const reviewItem = document.createElement('div');
+                    reviewItem.className = 'show-item';
+                    
+                    const starString = '⭐'.repeat(parseInt(review.stars) || 5);
+                    const lastName = review.last ? ` ${review.last}` : '';
+
+                    reviewItem.innerHTML = `
+                        <div class="show-main-info" style="font-family: Arial, sans-serif;">
+                            <span class="show-date-time" style="font-family: 'Arial Black', sans-serif;">${review.first}${lastName}</span>
+                            <span style="font-size: 1.1rem;">${starString}</span>
+                        </div>
+                        <div class="show-address" style="color: var(--text-color); font-family: Arial, sans-serif; text-transform: none; font-weight: normal; margin-top: 5px;">
+                            "${review.comment || 'No comment left.'}"
+                        </div>
+                    `;
+                    displayList.appendChild(reviewItem);
                 });
+            } catch (err) {
+                console.error("Error reading data file archive:", err);
+                displayList.innerHTML = "<p style='text-align:center; font-family:Arial;'>Could not load the review archive.</p>";
             }
         }
 
@@ -276,25 +407,24 @@
                 comment: document.getElementById('comment-text').value
             };
 
-            document.cookie = "has_submitted_review=true; max-age=" + (60*60*24*365) + "; path=/;";
+            localStorage.setItem("user_submitted_review_data", JSON.stringify(payload));
 
             try {
                 await fetch('https://formspree.io/f/xqerragj', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                alert("Thank you for sending a review! It should go on the website in about a minute!");
+                alert("Success! Your review was sent securely.");
                 location.reload();
             } catch (err) {
-                console.error("Error communicating with webhook:", err);
+                console.error("Formspree delivery network warning error:", err);
+                alert("There was an issue dispatching the review.");
             }
         });
 
-        checkExistingReview();
+        renderUserStatus();
+        loadLiveReviews();
     </script>
 </body>
 </html>
