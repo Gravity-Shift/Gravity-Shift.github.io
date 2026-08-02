@@ -285,7 +285,7 @@
     </section>
 
     <section>
-        <h2 style="font-size: 2.5rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; text-align: center;">What Fans Are Saying</h2>
+        <h2 style="font-size: 2.5rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; text-align: center;">Other Reviews:</h2>
         <div id="reviews-display-list">Loading reviews...</div>
     </section>
 
@@ -344,7 +344,7 @@
 
                     interactionZone.innerHTML = `
                         <div style="text-align: left; font-family: Arial, sans-serif; padding: 25px; border: 3px solid #ff3b30; border-radius: 8px; background-color: var(--form-input-bg); width: 100%;">
-                            <div style="font-family: 'Arial Black', sans-serif; text-transform: uppercase; font-size: 0.8rem; color: #ff3b30; letter-spacing: 1px; margin-bottom: 10px;">Your Live Review (Pending Site Update)</div>
+                            <div style="font-family: 'Arial Black', sans-serif; text-transform: uppercase; font-size: 0.8rem; color: #ff3b30; letter-spacing: 1px; margin-bottom: 10px;">Your Review</div>
                             <div class="show-main-info" style="margin-bottom: 8px;">
                                 <span class="show-date-time" style="font-family: 'Arial Black', sans-serif;">${userReview.first}${lastName}</span>
                                 <span style="font-size: 1.1rem;">${starString}</span>
@@ -353,15 +353,35 @@
                                 "${userReview.comment || 'No comment left.'}"
                             </div>
                             <div style="text-align: right; margin-top: 15px;">
-                                <button id="delete-review-btn">Delete & Write New Review</button>
+                                <button id="delete-review-btn">Delete Review</button>
                             </div>
                         </div>
                     `;
 
-                    document.getElementById('delete-review-btn').addEventListener('click', () => {
-                        localStorage.removeItem("user_submitted_review_data");
-                        alert("Session cleared. You can now write a fresh review!");
-                        location.reload();
+                    document.getElementById('delete-review-btn').addEventListener('click', async () => {
+                        if (confirm("Are you sure you want to permanently delete your review from the website?")) {
+                            const deletePayload = {
+                                action_type: "delete-review-event",
+                                first: userReview.first,
+                                last: userReview.last,
+                                comment: userReview.comment
+                            };
+
+                            try {
+                                await fetch('https://hook.us2.make.com/h7y0s28kfjk0lt1oblaswgzx6mj65kcm', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(deletePayload)
+                                });
+
+                                localStorage.removeItem("user_submitted_review_data");
+                                alert("Deletion request sent! Your review will disappear shortly.");
+                                location.reload();
+                            } catch (err) {
+                                console.error(err);
+                                alert("Error dispatching deletion request.");
+                            }
+                        }
                     });
                 } catch (e) {
                     console.error("Local storage processing error:", e);
@@ -409,6 +429,7 @@
             e.preventDefault();
             
             const payload = {
+                action_type: "new-review-event",
                 first: document.getElementById('first-name').value,
                 last: document.getElementById('last-name').value,
                 stars: document.getElementById('rating-stars').value,
@@ -430,10 +451,10 @@
                     body: JSON.stringify(payload)
                 });
 
-                alert("Your review was sent!");
+                alert("Success! Your review was sent securely.");
                 location.reload();
             } catch (err) {
-                console.error("Automation pipeline warning network error:", err);
+                console.error(err);
                 alert("There was an issue dispatching the review updates.");
             }
         });
