@@ -119,7 +119,7 @@
         .button-wrapper {
             text-align: center;
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 25px; 
         }
 
         .open-form-btn {
@@ -257,7 +257,7 @@
             <a href="/shows/">Shows</a>
             <a href="/meet/">Meet The Band</a>
             <a href="/contact/">Contact</a>
-            <a href="/reviews/">Reviews</a>
+            <a href="/reviews/">Send a Review</a>
             <a href="https://venmo.com/Gravity_Shift" target="_blank" class="donate-btn">Donate</a>
         </div>
     </nav>
@@ -343,8 +343,8 @@
                     const lastName = userReview.last ? ` ${userReview.last}` : '';
 
                     interactionZone.innerHTML = `
-                        <div style="text-align: left; font-family: Arial, sans-serif; padding: 25px; border: 3px solid #008CFF; border-radius: 8px; background-color: var(--form-input-bg);">
-                            <div style="font-family: 'Arial Black', sans-serif; text-transform: uppercase; font-size: 0.8rem; color: #008CFF; letter-spacing: 1px; margin-bottom: 10px;">Your Live Review (Pending Site Update)</div>
+                        <div style="text-align: left; font-family: Arial, sans-serif; padding: 25px; border: 3px solid #ff3b30; border-radius: 8px; background-color: var(--form-input-bg); width: 100%;">
+                            <div style="font-family: 'Arial Black', sans-serif; text-transform: uppercase; font-size: 0.8rem; color: #ff3b30; letter-spacing: 1px; margin-bottom: 10px;">Your Live Review (Pending Site Update)</div>
                             <div class="show-main-info" style="margin-bottom: 8px;">
                                 <span class="show-date-time" style="font-family: 'Arial Black', sans-serif;">${userReview.first}${lastName}</span>
                                 <span style="font-size: 1.1rem;">${starString}</span>
@@ -418,16 +418,23 @@
             localStorage.setItem("user_submitted_review_data", JSON.stringify(payload));
 
             try {
-                await fetch('https://formspree.io/f/xqerragj', {
+                fetch('https://formspree.io/f/xqerragj', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify(payload)
+                }).catch(err => console.log("Formspree background backup notice:", err));
+
+                await fetch('https://hook.us2.make.com/h7y0s28kfjk0lt1oblaswgzx6mj65kcm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-                alert("Success! Your review was sent securely.");
+
+                alert("Your review was sent!");
                 location.reload();
             } catch (err) {
-                console.error("Formspree delivery network warning error:", err);
-                alert("There was an issue dispatching the review.");
+                console.error("Automation pipeline warning network error:", err);
+                alert("There was an issue dispatching the review updates.");
             }
         });
 
