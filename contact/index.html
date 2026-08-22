@@ -260,5 +260,21 @@
             }
         });
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const popupOverlay = document.getElementById("storage-popup-overlay");
+        const closeBtn = document.getElementById("close-storage-popup");
+        const STORAGE_KEY = "hasSeenStorageNotice";
+
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          popupOverlay.classList.remove("hidden");
+        }
+
+        closeBtn.addEventListener("click", () => {
+          localStorage.setItem(STORAGE_KEY, "true");
+          popupOverlay.classList.add("hidden");
+        });
+      });
+    </script>
 </body>
 </html>
